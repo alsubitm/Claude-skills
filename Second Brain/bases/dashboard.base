@@ -1,0 +1,57 @@
+filters:
+  and:
+    - file.ext == "md"
+views:
+  - type: table
+    name: Recently updated
+    limit: 12
+    filters:
+      and:
+        - file.inFolder("wiki")
+    sort:
+      - property: file.mtime
+        direction: DESC
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - type
+      - area
+      - status
+      - file.mtime
+  - type: table
+    name: Needs attention
+    limit: 20
+    filters:
+      and:
+        - file.inFolder("wiki")
+        - or:
+            - 'status == "conflicted"'
+            - 'confidence == "low"'
+            - and:
+                - file.hasProperty("review_due")
+                - '!review_due.isEmpty()'
+                - review_due <= today()
+    sort:
+      - property: file.mtime
+        direction: ASC
+    order:
+      - file.name
+      - type
+      - status
+      - confidence
+      - review_due
+  - type: table
+    name: Clippings inbox
+    limit: 20
+    filters:
+      and:
+        - file.inFolder("clippings")
+        - 'status == "inbox"'
+    sort:
+      - property: file.ctime
+        direction: DESC
+    order:
+      - file.name
+      - source
+      - clipped

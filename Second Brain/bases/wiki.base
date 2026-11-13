@@ -1,0 +1,29 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("wiki")
+views:
+  - type: table
+    name: All pages
+    sort:
+      - property: file.mtime
+        direction: DESC
+    order:
+      - file.name
+      - type
+      - area
+      - status
+      - file.mtime
+  - type: table
+    name: Related
+    filters:
+      and:
+        - file.hasLink(this.file)
+    sort:
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - type
+      - area
+      - file.mtime

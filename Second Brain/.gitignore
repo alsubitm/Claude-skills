@@ -1,0 +1,5 @@
+.obsidian/*
+!.obsidian/snippets/
+!.obsidian/snippets/**
+.trash/
+.DS_Store

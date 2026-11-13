@@ -1,0 +1,55 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("wiki/sops")
+views:
+  - type: table
+    name: SOP register
+    sort:
+      - property: id
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - id
+      - area
+      - owner
+      - approved
+      - review_due
+      - status
+  - type: table
+    name: Review overdue
+    filters:
+      and:
+        - file.hasProperty("review_due")
+        - '!review_due.isEmpty()'
+        - review_due <= today()
+    sort:
+      - property: review_due
+        direction: ASC
+    order:
+      - file.name
+      - id
+      - owner
+      - review_due
+  - type: table
+    name: Missing governance
+    filters:
+      and:
+        - or:
+            - '!file.hasProperty("owner")'
+            - owner.isEmpty()
+            - '!file.hasProperty("approved")'
+            - approved.isEmpty()
+            - '!file.hasProperty("review_due")'
+            - review_due.isEmpty()
+    sort:
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - id
+      - owner
+      - approved
+      - review_due

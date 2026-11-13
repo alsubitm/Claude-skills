@@ -1,0 +1,54 @@
+/* ============================================================
+   Second Brain — multi-column callouts
+   Minimal equivalent derived from "MCL Multi Column.css" v0.10.0
+   (GPL-3.0, Faiz Khuzaimah / @efemkay,
+   github.com/efemkay/obsidian-modular-css-layout) — assembled
+   from that file's verbatim rules for the two callouts this
+   vault uses: [!multi-column] and [!blank-container].
+   Enable under: Settings → Appearance → CSS snippets
+   ============================================================ */
+
+body {
+  --callout-min-width: 200px;
+  --callout-gap: 1em;
+  --callout-margin: 0px;
+}
+
+/* -- [!multi-column]: children become wrapping flex columns -- */
+div[data-callout="multi-column"].callout > .callout-title { display: none; }
+div[data-callout="multi-column"].callout > .callout-content { display: contents; }
+div[data-callout="multi-column"].callout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--callout-gap);
+  background: unset;
+  border: unset;
+  margin: unset;
+  padding: unset;
+  clear: both;
+}
+div[data-callout="multi-column"].callout .callout:not([data-callout="multi-column"]) {
+  display: flex;
+  flex-direction: column;
+}
+div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1; }
+div[data-callout="multi-column"].callout > .callout-content > *:is(div, ul, blockquote, p) {
+  flex: 1 1 var(--callout-min-width);
+  margin: 0;
+}
+
+/* Width ratios set on SUB-callouts, e.g. [!note|wide-2] */
+div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-2"] { flex-grow: 2; }
+div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-3"] { flex-grow: 3; }
+
+/* -- [!blank-container] / [!blank]: invisible container -- */
+div[data-callout*="blank"].callout { --callout-blend-mode: normal; }
+div[data-callout*="blank"].callout > .callout-title { display: none; }
+div[data-callout*="blank"].callout > .callout-content { display: contents; }
+div[data-callout*="blank"].callout {
+  border: 0;
+  padding-top: 0;
+  padding-inline: 5px;
+  background: unset;
+  box-shadow: unset;
+}

@@ -1,0 +1,69 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("wiki/risks")
+formulas:
+  score: "likelihood * impact"
+views:
+  - type: table
+    name: Risk register
+    sort:
+      - property: formula.score
+        direction: DESC
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - area
+      - likelihood
+      - impact
+      - formula.score
+      - owner
+      - status
+      - review_due
+  - type: kanban
+    name: By status
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - open
+      - watching
+      - mitigating
+      - closed
+      - null
+    sort:
+      - property: formula.score
+        direction: DESC
+  - type: table
+    name: Without controls
+    filters:
+      and:
+        - 'status != "closed"'
+        - or:
+            - '!file.hasProperty("controls")'
+            - controls.isEmpty()
+    sort:
+      - property: formula.score
+        direction: DESC
+    order:
+      - file.name
+      - likelihood
+      - impact
+      - formula.score
+      - owner
+  - type: table
+    name: Review overdue
+    filters:
+      and:
+        - file.hasProperty("review_due")
+        - '!review_due.isEmpty()'
+        - review_due <= today()
+    sort:
+      - property: review_due
+        direction: ASC
+    order:
+      - file.name
+      - formula.score
+      - owner
+      - review_due

@@ -1,227 +1,226 @@
 # Second Brain — Operating Manual
 
-This file is the permanent operating manual for this Second Brain. Every interaction with this vault — ingestion, query, analysis, comparison, audit, or maintenance — must follow the rules in this file. If an instruction in a conversation conflicts with this manual, ask the owner which should govern before acting.
+This file is the permanent operating manual for this Second Brain. Every interaction with this vault — ingestion, query, analysis, comparison, planting ideas, reviews, audits, maintenance — follows the rules here. If an instruction in a conversation conflicts with this manual, ask the owner which should govern before acting. This is structure v2 (redesigned 2026-11-13 on the owner's instruction; see log.md).
 
-## Purpose
+## Prime directives
 
-This Second Brain stores, organizes, connects, and improves the knowledge, SOPs, workflows, policies, processes, external research, and operational lessons of the owner's business. It is an Obsidian-compatible vault: plain Markdown files, wiki-style `[[internal links]]`, YAML frontmatter.
+1. **The wiki is the system of record** (handbook-first): no decision or SOP change is "real" until it is on a wiki page; announcements link to the page.
+2. **NEVER write to `raw/`. This is a hard constraint with no exceptions.** No edits, renames, moves, or deletions unless the owner explicitly authorizes that specific action in that conversation. The same applies to the content of `clippings/` files (one narrow exception: the `status` frontmatter key, see Clippings below).
+3. **Never invent business facts.** Names, figures, dates, procedures, responsibilities come only from ingested sources or directly from the owner. When the knowledge base lacks evidence, say so plainly.
+4. **Never silently replace conflicting information** — record the conflict, cite both sources with dates, ask the owner which governs (see Conflicts).
+5. **Never delete wiki pages.** Outdated pages get `status: superseded` and stay linked from their replacement.
+6. **Every write updates `index.md` and appends to `log.md`** in the same operation. An ingest that skips either is incomplete.
+7. `log.md` is append-only; `CLAUDE.md` changes only on the owner's instruction, and the change is logged.
 
-It is optimized to answer four kinds of questions:
+## Purpose and business context
 
-1. **"How do we do X here?"** — fast retrieval of the current, governing SOP, policy, or process.
-2. **Business and start-up decisions** — comparing options, capturing decision rationale, tracking what was decided and why.
-3. **Ideas and creative development** — capturing marketing ideas, design concepts, and out-of-the-box thinking so they mature over time instead of getting lost.
-4. **Risks, lessons, and compliance** — what could go wrong, what went wrong before, what controls exist, and what external research recommends.
+Recorded from the owner interview on 2026-08-31; update only when the owner says the business has changed.
 
-## Business Context
+- The owner runs **general business operations** — broad, entrepreneurial scope.
+- The vault optimizes for four jobs: **"How do we do X here?"** retrieval; **business and start-up decisions** with rationale; **ideas and creative development** that mature instead of getting lost (the [[Greenhouse]]); and **risks, lessons, and compliance**.
+- The owner provides: SOPs, policies and plans; meeting notes and memos; business and financial documents; and web clippings via Obsidian Web Clipper.
+- Information is categorized **by business area first** (taxonomy below), knowledge type second.
 
-Recorded from the owner interview on 2026-08-31. Update this section only when the owner says the business has changed.
+## The pipeline (CODE)
 
-- The owner runs **general business operations** — a broad, entrepreneurial scope, not a single specialty.
-- The Second Brain must cover these **business areas**: design; business start-up operations; marketing and ideas; creativity and out-of-the-box thinking; business management; security and emergency response; operations and service delivery; HR, training and administration; finance, procurement and contracts.
-- The owner will provide: SOPs, policies and plans; meeting notes and internal memos; business and financial documents (business plans, contracts, RFPs, budgets, KPI reports); and web articles and external research captured through Obsidian Web Clipper.
-- Information is categorized **by business area first**, with knowledge type secondary (see Business-Area Taxonomy below).
+Every piece of inbound material moves through four stages:
 
-## Folder Structure and Purpose
+| Stage | Where | What happens |
+|---|---|---|
+| **Capture** | `raw/`, `clippings/` | Originals land, immutable |
+| **Organize** | `wiki/sources/` | One source-summary page per document |
+| **Distill** | `wiki/` entity pages | Facts become linked, cited entity pages |
+| **Express** | `wiki/analyses/`, [[Home]], registers | Answers, comparisons, reviews, dashboards |
+
+## Folder structure
 
 ```
 Second Brain/
-├── CLAUDE.md        ← this operating manual (edit only on owner instruction)
-├── index.md         ← master index of every wiki page, by business area
-├── log.md           ← append-only operations log
-├── raw/             ← original internal documents — SOURCE OF TRUTH, read-only
-│   ├── business-documents/   ← business plans, contracts, RFPs, budgets, KPI reports
-│   ├── sops/                 ← original SOP documents
-│   ├── policies/             ← original policy and plan documents
-│   ├── meeting-notes/        ← meeting minutes, memos, internal correspondence
-│   └── assets/               ← images, diagrams, spreadsheets, and other binary attachments
-├── clippings/       ← external articles and research captured via Obsidian Web Clipper — preserved as captured
-└── wiki/            ← knowledge generated and maintained by the agent
-    ├── sources/         ← one summary page per ingested raw document or clipping
-    ├── sops/            ← distilled SOP pages (one per procedure)
-    ├── processes/       ← business process pages (how work flows end-to-end)
-    ├── people/          ← one page per person (roles, responsibilities, contacts)
-    ├── organizations/   ← one page per company, vendor, client, or authority
-    ├── tools/           ← one page per tool, system, or platform the business uses
-    ├── concepts/        ← definitions, frameworks, ideas, creative concepts
-    ├── risks/           ← one page per identified risk, with its controls
-    ├── decisions/       ← one page per significant decision, with rationale and evidence
-    └── analyses/        ← saved analyses, comparisons, and research conclusions
+├── CLAUDE.md          ← this manual
+├── Home.md            ← dashboard and front door (cssclasses: sb-home)
+├── index.md           ← master index by business area (rebuildable cache)
+├── log.md             ← append-only operations log
+├── raw/               ← SOURCE OF TRUTH — never written
+│   ├── business-documents/  sops/  policies/  meeting-notes/  assets/
+├── clippings/         ← Web Clipper captures (content preserved as captured)
+├── wiki/              ← agent-generated knowledge
+│   ├── maps/          ← navigation: 9 area maps + Greenhouse
+│   ├── sources/  sops/  processes/  people/  organizations/
+│   ├── tools/  concepts/  ideas/  risks/  decisions/  analyses/
+├── bases/             ← .base files powering the live views and registers
+├── templates/         ← one template per page type (core Templates plugin)
+├── setup/             ← one-time setup: guide + Web Clipper template JSON
+└── .obsidian/snippets/ ← sb-identity.css, sb-columns.css
 ```
 
-### Folder rules
+**Routing table** — where each kind of new knowledge goes:
 
-1. **`raw/` is the source of truth.** Never edit, rename, move, or delete anything in `raw/` unless the owner explicitly authorizes that specific action in that conversation. Blanket permission does not exist.
-2. **`clippings/` preserves originals.** Files captured by Obsidian Web Clipper stay exactly as captured. Do not edit their content. Summarize and interpret them in `wiki/`, never in place.
-3. **`wiki/` is the agent's workspace.** The agent creates, updates, cross-references, and maintains these pages. Every wiki page must trace its facts back to `raw/` or `clippings/` sources.
-4. **`CLAUDE.md`** changes only when the owner asks for a rule change, and the change is recorded in `log.md`.
-5. **`index.md`** is updated in the same operation as any wiki page creation, rename, or significant update.
-6. **`log.md`** is append-only. Never edit or delete existing entries. Corrections are new entries.
-
-## Business-Area Taxonomy
-
-Every wiki page carries one or more `area` values in its frontmatter. The canonical areas and tags:
-
-| Area | Tag | Covers |
+| Kind of knowledge | Folder | Template |
 |---|---|---|
-| Design & Brand | `design` | Visual design, brand, product/service design |
-| Start-up & Strategy | `startup` | Business start-up operations, strategy, new ventures |
-| Marketing & Ideas | `marketing` | Marketing plans, campaigns, marketing ideas |
-| Creativity & Innovation | `ideas` | Out-of-the-box thinking, creative concepts not yet assigned to an area |
-| Business Management | `management` | General management, planning, governance, KPIs |
-| Security & Emergency | `security` | Security operations, incident and emergency response, HSSE |
-| Operations & Service Delivery | `operations` | Core operational processes, service delivery, facilities, logistics |
-| HR, Training & Administration | `hr` | People, recruitment, training, competency, admin |
-| Finance, Procurement & Contracts | `finance` | Budgets, purchasing, vendors, contracts, RFPs and bids |
+| Ingested document/clipping summary | `wiki/sources/` | Source Template |
+| Procedure (how to do one thing) | `wiki/sops/` | SOP Template |
+| End-to-end flow across roles | `wiki/processes/` | Process Template |
+| A person | `wiki/people/` | Person Template |
+| A company, client, vendor, authority | `wiki/organizations/` | Organization Template |
+| A tool, system, platform | `wiki/tools/` | Tool Template |
+| A definition or framework (≥2 sources engage with it) | `wiki/concepts/` | Concept Template |
+| A maturing creative/marketing/venture idea | `wiki/ideas/` | Idea Template |
+| A risk | `wiki/risks/` | Risk Template |
+| A significant decision | `wiki/decisions/` | Decision Template |
+| An analysis, comparison, weekly review | `wiki/analyses/` | Analysis / Weekly Review Template |
+| A navigation map | `wiki/maps/` | Map Template |
 
-Add a new area only when the owner introduces one; record the taxonomy change in `log.md` and update this table.
+If the agent needs to infer where something belongs, the structure is too clever — ask the owner.
 
-## Naming Conventions
+## Navigation layer
 
-- **Wiki pages**: Title Case, the subject itself as the file name, no prefixes, no dates in the name. Examples: `Incident Management.md`, `Emergency Response SOP.md`, `Ahmed Al-Qahtani.md`. The file name is the link text — `[[Incident Management]]` must resolve.
-- **Source-summary pages** (`wiki/sources/`): the human-readable title of the original document, e.g. `raw/sops/ERP-v2_final(3).docx` → `wiki/sources/Emergency Response Plan v2.md`. The page's frontmatter records the exact original path.
-- **Raw files**: keep their original names — never rename. When the owner drops in a new file, a `YYYY-MM-DD` prefix is recommended but never required and never applied retroactively.
-- **Clippings**: keep the name Obsidian Web Clipper assigns.
-- **One subject per page.** If a page starts covering two subjects, split it and cross-link the halves.
-- Avoid characters that break Obsidian links in file names: `[ ] # ^ | \ / :`.
+Three levels, zero file moves: **[[Home]] → maps → pages**.
 
-## Markdown and YAML Formatting Rules
+- [[Home]] links to maps (and fixed library pages), never to individual entity pages; it must stay glanceable. Live sections come from `bases/dashboard.base` embeds.
+- One map per business area in `wiki/maps/`, plus the [[Greenhouse]]. Maps are curated overlays: grouped links **with a phrase of commentary each**, a live area table, and threads into other maps.
+- Gardening rules (mechanical, agent-enforced): add a curated link when a page joins an area; 3–5 links per section before splitting a subsection; a new sub-map is justified by 7–10 loose pages on one topic; a map that no longer fits one screen gets split; every wiki page carries `up` and a `Map:` line pointing to its map.
+- Open [[Home]] in **Reading view** for the column layout (CSS targets it). Recommend pinning the Home tab.
 
-Every wiki page starts with YAML frontmatter:
+## Business-area taxonomy
 
-```yaml
----
-type: source | sop | process | person | organization | tool | concept | risk | decision | analysis
-area: [security, operations]        # one or more taxonomy tags
-created: YYYY-MM-DD
-updated: YYYY-MM-DD                 # bump on every content change
-sources:                            # the raw files / clippings the page's facts come from
-  - "raw/sops/ERP-v2_final(3).docx"
-  - "clippings/Some Article.md"
-status: current                     # current | draft | conflicted | superseded
----
+The `area` property (list) carries one or more of exactly these values:
+
+| Area | Value | Map |
+|---|---|---|
+| Design & Brand | `design` | [[Design Map]] |
+| Start-up & Strategy | `startup` | [[Startup Map]] |
+| Marketing & Ideas | `marketing` | [[Marketing Map]] |
+| Creativity & Innovation | `creativity` | [[Creativity Map]] |
+| Business Management | `management` | [[Management Map]] |
+| Security & Emergency | `security` | [[Security Map]] |
+| Operations & Service Delivery | `operations` | [[Operations Map]] |
+| HR, Training & Administration | `hr` | [[HR Map]] |
+| Finance, Procurement & Contracts | `finance` | [[Finance Map]] |
+
+New areas only on the owner's instruction: add the value here, create the map, log the change.
+
+## Page schemas (frontmatter)
+
+Bases reads **only** frontmatter properties and file metadata, so every queryable datum is a property, never inline text. Rules:
+
+- Multi-word property names use **underscores** (`review_due`, `decided_by`) — hyphens break Bases expressions.
+- Common to all wiki pages: `type`, `area` (list), `status`, `sources` (list), `confidence` (high|medium|low), `up`, `created`, `updated` (bump on every content change). Dates are `YYYY-MM-DD`.
+- **Unknown ≠ invented:** when a source does not state a value (owner, approval date…), leave the property **empty**. Empty values are surfaced by the registers as audit findings. Never guess.
+- Status vocabularies are fixed: general pages `draft | current | conflicted | superseded`; ideas `seedling | budding | evergreen | parked`; decisions `proposed | active | superseded | reversed`; risks `open | watching | mitigating | closed`; clippings `inbox | ingested`.
+- Stable IDs, assigned at creation and never reused or renamed: SOPs `SOP-<area##>.<##>` (e.g. SOP-31.04), decisions `DEC-<YYYY>-<###>` (e.g. DEC-2026-014). The index records them.
+- Type-specific required fields are defined by the templates in `templates/` — always start from the template.
+
+## Naming, titles and aliases
+
+- Wiki pages: Title Case, the subject itself as the name, no dates in the name. The filename is the link target — `[[Incident Management]]` must resolve. Avoid `[ ] # ^ | \ / :` in names.
+- Titles are handles: declarative and specific ("Contractor Onboarding SOP", not "Onboarding stuff").
+- **Every SOP and process gets question-phrased `aliases`** ("How do we onboard a contractor?") so natural questions hit the right page in search and in chat.
+- Source pages: the human-readable title of the original document; the exact path lives in the `original` property.
+- Raw files and clippings keep their original names — never renamed.
+
+## Formatting rules
+
+- One `# H1` matching the filename; shallow `##` hierarchy; `**bold**` for the key lines (progressive-summarization discipline); every entity page opens with a TL;DR callout.
+- Wiki-links on first mention per section; `[[Page#Section]]` and `[[Page|display]]` as needed; embeds `![[file]]`.
+- House callouts (defined in `sb-identity.css`): `[!map]` navigation · `[!sop]` procedure highlights · `[!risk]` risk statements · `[!decision]` decisions · `[!idea]` ideas · `[!conflict]` contradictions. Built-ins (`[!abstract]`, `[!tip]`, `[!warning]`…) stay available. Foldable: `[!type]-` closed, `[!type]+` open.
+- `> [!multi-column]` + `>> [!blank]`/typed sub-callouts for columns (needs `sb-columns.css`); separator between sub-callouts is a line holding only `>`.
+
+## Citation and provenance
+
+- **Every important factual statement cites its source**: `(source: [[Source Page]])` — the source page records the original file path.
+- Frontmatter `sources:` lists every source cited on the page.
+- Maximum ~2 direct quotes per page; prefer distilled statements in our own words.
+- Evidence (cited) is separated from interpretation (marked "Assessment:" or equivalent).
+- Uncertain claims get `confidence: low` — the dashboard surfaces them.
+
+## Conflicts
+
+When new information contradicts existing pages: keep both versions visible under a `> [!conflict]` callout quoting the exact conflicting statements; name the competing sources and their dates; set `status: conflicted`; log it; ask the owner which governs. After the ruling: mark the losing information superseded (kept, in a History section), restore status, log the resolution.
+
+## Dedup and link integrity
+
+- Read `index.md` before creating any page; search for an existing page first — duplicates are vault rot.
+- Don't create a page you cannot fill with at least 3 meaningful sentences; a concept needs ≥2 distinct sources engaging with it.
+- **Re-read a page in full before updating it.**
+- Link at write time, in both directions — but **only to files that exist on disk**; verify the target before writing the link. A link that must wait is logged: `SKIPPED: [[Target]] from Page.md — target not found at write time`.
+- No vault-wide "standardize all frontmatter" passes — bulk edits silently break views. Bounded per-folder tasks only, with YAML validity checked in the same turn.
+
+## Bases authoring rules
+
+The live views live in `bases/*.base` and inline ` ```base ` blocks (maps). When writing or editing them:
+
+- Only documented keys: top-level `filters / formulas / properties / summaries / views`; per view `type / name / limit / filters / groupBy / groupOrder / sort / order / summaries`.
+- `sort` entries are maps with exactly `property` and `direction`, direction **uppercase** `ASC`/`DESC` — anything else is *silently ignored*.
+- Quote formulas: single-quote the YAML scalar, double-quote strings inside: `'if(price, price.toFixed(2) + " dollars")'`.
+- Filters reference `file.inFolder("wiki/sops")`, `file.hasTag()`, `file.hasProperty()`, bare property names, `file.mtime > now() - "1 week"`, `this.file` in embeds.
+- Inside callouts embed **base files** (`> ![[dashboard.base#View]]`), never fenced ` ```base ` blocks (known editing bugs). Fenced blocks are fine standalone.
+- Obsidian may append its own UI-state keys to .base files — leave them in place.
+
+## Clippings
+
+`clippings/` is an inbox, not a destination. The Web Clipper template (in `setup/`) stamps every capture with `status: inbox`. **The one permitted edit to a clipping** is flipping its frontmatter `status` from `inbox` to `ingested` during ingestion — the body below the frontmatter is never touched. Everything else about raw-immutability applies.
+
+## Workflows
+
+### Ingestion ("Ingest raw/sops/X" / "Ingest all new files in raw/" / "Ingest the new clippings")
+
+1. Read `index.md` and `log.md` first; identify new or unprocessed files (clippings: `status: inbox`).
+2. Read every selected source completely — no skimming.
+3. Summarize facts, requirements, responsibilities, risks, decisions, processes; for a multi-source batch, present 3–5 key takeaways to the owner before writing.
+4. Create a source page in `wiki/sources/` (template; `original:` = exact path).
+5. Create/update the entity pages per the routing table, from their templates, citing the source; assign IDs and aliases; set `area`.
+6. Cross-link in both directions (link-integrity rules above) and add each new page to its map's curated trails with commentary.
+7. Check for conflicts; handle per Conflicts.
+8. Clippings: flip `status` to `ingested`.
+9. Update `index.md`; append to `log.md`.
+10. Report: files created/updated, conflicts, anything needing review (empty owners/dates, low confidence). Expect one ingest to touch 5–15 pages.
+
+### Query (the owner asks a question)
+
+1. `index.md` first → relevant pages → follow links as needed.
+2. Answer from the knowledge base, citing the supporting pages (and through them the sources).
+3. State plainly when evidence is missing; never fill gaps; offer to ingest what would cover them.
+4. Offer to save valuable conclusions into `wiki/analyses/` (then index + log).
+
+### Planting and tending ideas ("Plant an idea: …")
+
+Create the page in `wiki/ideas/` from Idea Template (`status: seedling`, `planted`/`tended` today, `up: [[Greenhouse]]`); link related pages; index + log. Tending updates `tended` and promotes status when earned; graduation creates a decision page.
+
+### Comparison (`Compare [[article]] against [[SOP]]`)
+
+Ingest the external source if new → read the current SOP and its source → write a comparison in `wiki/analyses/`: point-by-point table, gaps, labeled recommendations. The SOP itself changes only when the owner approves — then the lesson is edited into the SOP page, handbook-first.
+
+### Weekly review ("Run the weekly review")
+
+Pre-fill a `wiki/analyses/Weekly Review YYYY-MM-DD` page from the Weekly Review Template using `log.md` and the week's page changes: wins, stuck, open loops, Greenhouse check (promote/demote; resurface seedlings untended 30+ days), overdue `review_due` decisions and risks, next week's top 3. The owner confirms and decides; index + log.
+
+### Audit ("Run a wiki audit (dry run)")
+
+Check: broken/mis-cased links; orphans (no inbound links, missing from index or a map); duplicates; contradictions; unsupported claims; superseded pages still `current`; subjects mentioned 3+ times without a page; SOPs with empty owner/approved/review_due or past review; risks without controls; decisions without evidence or past review; malformed frontmatter and off-vocabulary statuses; index entries pointing nowhere; maps violating gardening rules; un-ingested files in `raw/` and `clippings/`. **The first audit — and any audit unless the owner says otherwise — is a dry run**: report, get approval, then fix. Log both. Cadence: monthly, or after every ~10 ingests; review this manual monthly too.
+
+## index.md rules
+
+Lists **every** wiki page, organized by business area first, knowledge type as a secondary label; entries carry an Obsidian link, a one-sentence description, last-updated date, and supporting sources. Maps are listed in their own Navigation section; source pages in the Source Library. Multi-area pages: full entry under the primary area, cross-reference under the others. The index is a rebuildable cache — the audit may regenerate it.
+
+## log.md rules
+
+Append-only; new entries at the end; corrections are new `correction` entries. Format:
+
+```markdown
+## [YYYY-MM-DD] operation | Subject
+- What was done, files touched, conflicts, owner decisions.
 ```
 
-Additional required frontmatter by type:
+Operations: `setup`, `ingest`, `query`, `analysis`, `comparison`, `idea`, `review`, `audit`, `audit-fix`, `conflict`, `resolution`, `structure`, `rule-change`, `correction`. Tag failures with `!failure`. Greppable scan: `grep "^## \[" log.md | tail -5`.
 
-- **`sop`**: `owner:` (who owns the procedure), `approved:` (approval date), `review-due:` (next review date). If the source document does not state one of these, write `unknown` — do not guess. `unknown` values are audit findings, not placeholders to fill creatively.
-- **`risk`**: `controls:` (list of existing controls; `none identified` is a valid, reportable value).
-- **`decision`**: `decided:` (date), `decided-by:`, `evidence:` (links to supporting pages/sources).
-- **`source`**: `original:` (exact path of the raw file or clipping), `ingested:` (date).
-
-Body rules:
-
-- One `# H1` matching the file name, then `##` sections. Keep hierarchy shallow.
-- Use `[[Wiki Links]]` for every mention of another subject that has (or deserves) a page. Link on first mention in each section.
-- Use `[[Page Name#Section]]` links when pointing at a specific section, and `[[Page Name|display text]]` when the sentence needs different wording.
-- Bullet lists for facts, tables for structured comparisons, `> [!note]` / `> [!warning]` Obsidian callouts for caveats and conflicts.
-- Embed assets with `![[image.png]]` referring to files in `raw/assets/`.
-- Dates always `YYYY-MM-DD`.
-
-## Source-Citation Requirements
-
-- **Every important factual statement must identify the document or clipping that supports it.** Cite inline at the end of the statement or bullet: `(source: [[Emergency Response Plan v2]])` — linking to the source-summary page, which in turn records the exact original file path.
-- A page's frontmatter `sources:` list must include every original file cited anywhere in the page.
-- Analyses and conclusions must separate **evidence** (cited) from **interpretation** (marked as the agent's reasoning, e.g. "Assessment:").
-- If a statement cannot be traced to a source, it does not belong in the wiki — flag the gap instead.
-
-## Rules Against Inventing Information
-
-1. Never write business facts, figures, names, dates, procedures, or responsibilities that do not come from an ingested source or directly from the owner.
-2. Never fill gaps with plausible-sounding content. State plainly: "The knowledge base does not contain this."
-3. Never infer approval status, ownership, or currency of an SOP — if the document doesn't say, record `unknown`.
-4. Clearly label anything that is the agent's own analysis, suggestion, or synthesis as such, and keep it out of pages that present facts unless clearly separated.
-5. **Never silently replace conflicting information.** When new information contradicts existing pages:
-   - Keep both versions visible on the affected page under a `> [!warning] Conflict` callout.
-   - Identify the competing sources and their dates.
-   - Set the page's `status: conflicted`.
-   - Record the conflict in `log.md`.
-   - Ask the owner which information governs the current process. Only after the owner rules: mark the losing information as superseded (keep it, struck through or in a "History" section), restore `status: current`, and log the resolution.
-
-## Ingestion Workflow
-
-When the owner asks to ingest a source (a file in `raw/` or `clippings/`):
-
-1. Read `index.md` and `log.md` first to know current state and avoid re-ingesting.
-2. Identify the new or unprocessed files (compare folder contents against source pages and log entries).
-3. Read every selected source completely — no skimming, no partial reads.
-4. Summarize the important facts, requirements, responsibilities, risks, decisions, and processes.
-5. Create a source-summary page in `wiki/sources/` (type `source`, frontmatter `original:` pointing at the exact file).
-6. Create or update the relevant SOP, process, person, organization, tool, risk, concept, and decision pages, citing the source.
-7. Add internal links between all related pages, in both directions.
-8. Check for conflicts with existing pages; handle per the conflict rule above.
-9. Update `index.md` (add/update entries under the correct business area).
-10. Append the operation to `log.md`.
-11. Report to the owner: files created, files updated, conflicts found, and anything requiring review (e.g. SOPs with `unknown` owners or dates).
-
-## Query Workflow
-
-When the owner asks a question:
-
-1. Read `index.md` first to locate relevant pages.
-2. Open the relevant wiki pages.
-3. Follow their `[[links]]` when additional context is required.
-4. Answer from the knowledge base, identifying the supporting pages (and through them, the original sources).
-5. State clearly when the knowledge base does not contain enough evidence to answer.
-6. Do not fill gaps with invented information — offer to ingest a source that would cover the gap instead.
-7. Offer to save valuable conclusions or analyses back into `wiki/analyses/` (then update `index.md` and `log.md`).
-
-## Comparison Workflow
-
-When the owner asks to compare external knowledge (a clipping or article) against an existing SOP or process:
-
-1. Ingest the external source first if it isn't already in the wiki.
-2. Read the current SOP/process page and its original source.
-3. Produce a comparison in `wiki/analyses/`: point-by-point table (our practice vs. external recommendation), gaps, and clearly-labeled improvement suggestions.
-4. Do not change the SOP page itself — recommendations only become SOP changes when the owner approves and provides/authorizes an updated source document.
-5. Update `index.md`, append to `log.md`.
-
-## Wiki-Audit Workflow
-
-When the owner requests an audit, check for:
-
-- Broken internal links (links to pages that don't exist).
-- Orphan pages (no links in, not listed in `index.md`).
-- Duplicate pages (two pages covering one subject).
-- Contradictory information between pages or within a page.
-- Unsupported claims (statements without source citations).
-- Outdated or superseded procedures still marked `current`.
-- Important subjects mentioned repeatedly but without dedicated pages.
-- SOPs with `unknown` or missing owners, approval dates, or review dates — and SOPs past their `review-due` date.
-- Risks without controls.
-- Decisions without supporting evidence.
-- Files in `raw/` or `clippings/` not yet ingested.
-
-**The first audit — and any audit unless the owner says otherwise — is a dry run**: report findings and proposed changes, get approval, then apply. Log both the audit and the approved fixes in `log.md`.
-
-## index.md Rules
-
-- Lists **every** wiki page, organized **by business area first** (the taxonomy above), with knowledge type as a secondary label on each entry.
-- Every entry: an Obsidian link to the page, a one-sentence description, the date last updated, and the supporting source(s).
-- Pages spanning multiple areas are listed under each area they carry (full entry under the primary area; short cross-reference under the others).
-- Source-summary pages are listed in the Source Library section at the bottom.
-- Update `index.md` in the same operation that creates or changes a page — an index that lags the wiki is an audit finding.
-
-## log.md Rules
-
-- Append-only. New entries go at the **end** of the file. Never edit or delete existing entries; correct mistakes with a new `correction` entry.
-- Record every ingestion, significant query, analysis, comparison, audit, structural change, conflict, and rule change.
-- Entry format:
-
-  ```markdown
-  ## [YYYY-MM-DD] operation | Subject
-  - What was done, files created/updated, conflicts found, owner decisions.
-  ```
-
-- Operation vocabulary: `setup`, `ingest`, `query`, `analysis`, `comparison`, `audit`, `audit-fix`, `conflict`, `resolution`, `structure`, `rule-change`, `correction`.
-
-## Commands Quick Reference
+## Commands quick reference
 
 | Owner says | Agent runs |
 |---|---|
-| "Ingest `raw/sops/<file>`" or "Ingest all new files in raw/" | Ingestion workflow |
-| "Ingest the new clippings" | Ingestion workflow over `clippings/` |
-| "Query: <question>" (or just asks a question about the business) | Query workflow |
-| "Compare [[<article/clipping>]] against [[<SOP>]]" | Comparison workflow |
-| "Run a wiki audit (dry run)" | Audit workflow, report-only |
-| "Apply the approved audit fixes" | Audit fixes, logged |
+| "Ingest raw/…/<file>" / "Ingest all new files in raw/" | Ingestion |
+| "Ingest the new clippings" | Ingestion over `clippings/` |
+| a question | Query |
+| "Plant an idea: …" | Greenhouse planting |
+| `Compare [[X]] against [[Y]]` | Comparison |
+| "Run the weekly review" | Weekly review |
+| "Run a wiki audit (dry run)" / "Apply the approved audit fixes" | Audit / fixes |

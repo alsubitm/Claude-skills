@@ -1,0 +1,50 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("wiki/decisions")
+views:
+  - type: table
+    name: Decision log
+    sort:
+      - property: decided
+        direction: DESC
+      - property: file.name
+        direction: ASC
+    order:
+      - file.name
+      - id
+      - area
+      - status
+      - decided
+      - decided_by
+      - review_due
+  - type: kanban
+    name: Pipeline
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - proposed
+      - active
+      - superseded
+      - reversed
+      - null
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: Due for review
+    filters:
+      and:
+        - 'status == "active"'
+        - file.hasProperty("review_due")
+        - '!review_due.isEmpty()'
+        - review_due <= today()
+    sort:
+      - property: review_due
+        direction: ASC
+    order:
+      - file.name
+      - id
+      - decided
+      - review_due

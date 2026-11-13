@@ -1,0 +1,48 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.inFolder("wiki/ideas")
+views:
+  - type: kanban
+    name: Greenhouse
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - seedling
+      - budding
+      - evergreen
+      - parked
+      - null
+    sort:
+      - property: tended
+        direction: ASC
+  - type: table
+    name: Needs tending
+    limit: 15
+    filters:
+      and:
+        - 'status != "evergreen"'
+        - 'status != "parked"'
+    sort:
+      - property: tended
+        direction: ASC
+      - property: planted
+        direction: ASC
+    order:
+      - file.name
+      - area
+      - status
+      - planted
+      - tended
+  - type: table
+    name: All ideas
+    sort:
+      - property: planted
+        direction: DESC
+    order:
+      - file.name
+      - area
+      - status
+      - planted
+      - tended

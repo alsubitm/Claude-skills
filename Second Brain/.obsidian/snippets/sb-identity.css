@@ -1,0 +1,67 @@
+/* ============================================================
+   Second Brain — visual identity snippet
+   Enable under: Settings → Appearance → CSS snippets
+   Defines the vault's custom callout "components" and light
+   identity touches. Core-Obsidian only; no plugins required.
+   ============================================================ */
+
+/* ---- Palette (RGB triplets, the format Obsidian's own
+        --callout-* variables use) ---- */
+body {
+  --sb-viridian: 23, 110, 99;    /* navigation / maps      */
+  --sb-slate:    63, 100, 175;   /* procedures / SOPs      */
+  --sb-rust:     191, 64, 54;    /* risks                  */
+  --sb-violet:   122, 82, 185;   /* decisions              */
+  --sb-ochre:    196, 138, 45;   /* ideas / greenhouse     */
+  --sb-crimson:  204, 36, 78;    /* conflicts              */
+}
+
+/* ---- Custom callout components ---- */
+.callout[data-callout="map"] {
+  --callout-color: var(--sb-viridian);
+  --callout-icon: lucide-map;
+}
+.callout[data-callout="sop"] {
+  --callout-color: var(--sb-slate);
+  --callout-icon: lucide-clipboard-list;
+}
+.callout[data-callout="risk"] {
+  --callout-color: var(--sb-rust);
+  --callout-icon: lucide-shield-alert;
+}
+.callout[data-callout="decision"] {
+  --callout-color: var(--sb-violet);
+  --callout-icon: lucide-scale;
+}
+.callout[data-callout="idea"] {
+  --callout-color: var(--sb-ochre);
+  --callout-icon: lucide-sprout;
+}
+.callout[data-callout="conflict"] {
+  --callout-color: var(--sb-crimson);
+  --callout-icon: lucide-alert-octagon;
+  --callout-border-width: 2px;
+  --callout-border-opacity: 0.4;
+}
+
+/* ---- Home page (notes with `cssclasses: sb-home`) ---- */
+/* Hide the properties block so the dashboard opens clean */
+.sb-home .metadata-container {
+  display: none;
+}
+/* A quieter, letter-spaced H1 for the masthead */
+.sb-home.markdown-preview-view h1,
+.sb-home.markdown-source-view h1,
+.sb-home .inline-title {
+  letter-spacing: 0.06em;
+}
+.sb-home h1 {
+  border-bottom: 1px dotted rgba(var(--sb-viridian), 0.55);
+  padding-bottom: 0.25em;
+}
+
+/* ---- Map pages (notes with `cssclasses: sb-map`) ---- */
+.sb-map h1 {
+  border-bottom: 1px dotted rgba(var(--sb-viridian), 0.55);
+  padding-bottom: 0.25em;
+}

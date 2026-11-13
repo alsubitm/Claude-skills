@@ -1,0 +1,46 @@
+{
+	"schemaVersion": "0.1.0",
+	"name": "Second Brain Clipping",
+	"behavior": "create",
+	"noteContentFormat": "{{content}}",
+	"properties": [
+		{
+			"name": "title",
+			"value": "{{title}}",
+			"type": "text"
+		},
+		{
+			"name": "source",
+			"value": "{{url}}",
+			"type": "text"
+		},
+		{
+			"name": "author",
+			"value": "{{author}}",
+			"type": "text"
+		},
+		{
+			"name": "published",
+			"value": "{{published|date:\"YYYY-MM-DD\"}}",
+			"type": "date"
+		},
+		{
+			"name": "clipped",
+			"value": "{{date|date:\"YYYY-MM-DD\"}}",
+			"type": "date"
+		},
+		{
+			"name": "description",
+			"value": "{{description}}",
+			"type": "text"
+		},
+		{
+			"name": "status",
+			"value": "inbox",
+			"type": "text"
+		}
+	],
+	"triggers": [],
+	"noteNameFormat": "{{title|safe_name}}",
+	"path": "clippings"
+}
