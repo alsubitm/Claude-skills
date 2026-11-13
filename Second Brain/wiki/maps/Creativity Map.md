@@ -29,6 +29,7 @@ Out-of-the-box thinking and creative concepts not yet owned by a single area —
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("creativity")
 views:

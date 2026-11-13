@@ -8,6 +8,7 @@ views:
     filters:
       and:
         - file.inFolder("wiki")
+        - '!file.inFolder("wiki/maps")'
     sort:
       - property: file.mtime
         direction: DESC

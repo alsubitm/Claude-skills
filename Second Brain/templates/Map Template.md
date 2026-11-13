@@ -5,8 +5,8 @@ status: current
 up: "[[Home]]"
 cssclasses:
   - sb-map
-created: {{date:YYYY-MM-DD}}
-updated: {{date:YYYY-MM-DD}}
+created: "{{date:YYYY-MM-DD}}"
+updated: "{{date:YYYY-MM-DD}}"
 ---
 
 # {{title}}
@@ -30,6 +30,7 @@ link are what make this a map instead of a search result.
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("CHANGE-ME")
 views:

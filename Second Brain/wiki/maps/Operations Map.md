@@ -29,6 +29,7 @@ Core operational processes, service delivery, facilities, and logistics. Arrange
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("operations")
 views:

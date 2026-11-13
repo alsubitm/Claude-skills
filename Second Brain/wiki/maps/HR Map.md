@@ -29,6 +29,7 @@ People, recruitment, training, competency, and administrative processes. Arrange
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("hr")
 views:

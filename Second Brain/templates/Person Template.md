@@ -8,8 +8,8 @@ status: current
 confidence: 
 sources: []
 up: "[[Home]]"
-created: {{date:YYYY-MM-DD}}
-updated: {{date:YYYY-MM-DD}}
+created: "{{date:YYYY-MM-DD}}"
+updated: "{{date:YYYY-MM-DD}}"
 ---
 
 # {{title}}

@@ -29,6 +29,7 @@ Visual design, brand identity, and product or service design. Arranged from iden
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("design")
 views:

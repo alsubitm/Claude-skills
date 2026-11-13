@@ -29,6 +29,7 @@ Security operations, incident and emergency response, and HSSE. Arranged from pr
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("security")
 views:

@@ -29,6 +29,7 @@ Business start-up operations, strategy, and new ventures. Arranged from the vent
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("startup")
 views:

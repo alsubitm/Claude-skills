@@ -3,12 +3,12 @@ type: source
 kind: 
 original: 
 area: []
-ingested: {{date:YYYY-MM-DD}}
+ingested: "{{date:YYYY-MM-DD}}"
 status: current
 sources: []
 up: "[[Home]]"
-created: {{date:YYYY-MM-DD}}
-updated: {{date:YYYY-MM-DD}}
+created: "{{date:YYYY-MM-DD}}"
+updated: "{{date:YYYY-MM-DD}}"
 ---
 
 # {{title}}

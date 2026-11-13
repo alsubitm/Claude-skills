@@ -29,6 +29,7 @@ Budgets, purchasing, vendors, contracts, RFPs and bids. Arranged from money in, 
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("finance")
 views:

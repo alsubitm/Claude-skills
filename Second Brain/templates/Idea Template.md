@@ -3,13 +3,13 @@ type: idea
 area: []
 aliases: []
 status: seedling
-planted: {{date:YYYY-MM-DD}}
-tended: {{date:YYYY-MM-DD}}
+planted: "{{date:YYYY-MM-DD}}"
+tended: "{{date:YYYY-MM-DD}}"
 confidence: 
 sources: []
 up: "[[Greenhouse]]"
-created: {{date:YYYY-MM-DD}}
-updated: {{date:YYYY-MM-DD}}
+created: "{{date:YYYY-MM-DD}}"
+updated: "{{date:YYYY-MM-DD}}"
 ---
 
 # {{title}}

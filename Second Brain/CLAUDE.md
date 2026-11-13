@@ -4,7 +4,7 @@ This file is the permanent operating manual for this Second Brain. Every interac
 
 ## Prime directives
 
-1. **The wiki is the system of record** (handbook-first): no decision or SOP change is "real" until it is on a wiki page; announcements link to the page.
+1. **The wiki states current practice; `raw/` holds the proof.** Handbook-first: no decision or SOP change is "real" until it is on a wiki page, and announcements link to the page. `raw/` remains the immutable source of captured documents — every wiki fact traces back to it or to an owner ruling recorded in the log.
 2. **NEVER write to `raw/`. This is a hard constraint with no exceptions.** No edits, renames, moves, or deletions unless the owner explicitly authorizes that specific action in that conversation. The same applies to the content of `clippings/` files (one narrow exception: the `status` frontmatter key, see Clippings below).
 3. **Never invent business facts.** Names, figures, dates, procedures, responsibilities come only from ingested sources or directly from the owner. When the knowledge base lacks evidence, say so plainly.
 4. **Never silently replace conflicting information** — record the conflict, cite both sources with dates, ask the owner which governs (see Conflicts).
@@ -104,7 +104,7 @@ New areas only on the owner's instruction: add the value here, create the map, l
 Bases reads **only** frontmatter properties and file metadata, so every queryable datum is a property, never inline text. Rules:
 
 - Multi-word property names use **underscores** (`review_due`, `decided_by`) — hyphens break Bases expressions.
-- Common to all wiki pages: `type`, `area` (list), `status`, `sources` (list), `confidence` (high|medium|low), `up`, `created`, `updated` (bump on every content change). Dates are `YYYY-MM-DD`.
+- Common to all wiki pages: `type`, `area` (list), `status`, `sources` (list), `confidence` (high|medium|low), `up`, `created`, `updated` (bump on every content change). Dates are `YYYY-MM-DD`. Exceptions: maps and other navigation pages omit `sources` and `confidence` (they organize, they don't assert); source pages omit `confidence`. Templates default `up` to `[[Home]]` as a fallback — set it to the page's map at creation.
 - **Unknown ≠ invented:** when a source does not state a value (owner, approval date…), leave the property **empty**. Empty values are surfaced by the registers as audit findings. Never guess.
 - Status vocabularies are fixed: general pages `draft | current | conflicted | superseded`; ideas `seedling | budding | evergreen | parked`; decisions `proposed | active | superseded | reversed`; risks `open | watching | mitigating | closed`; clippings `inbox | ingested`.
 - Stable IDs, assigned at creation and never reused or renamed: SOPs `SOP-<area##>.<##>` (e.g. SOP-31.04), decisions `DEC-<YYYY>-<###>` (e.g. DEC-2026-014). The index records them.
@@ -112,7 +112,7 @@ Bases reads **only** frontmatter properties and file metadata, so every queryabl
 
 ## Naming, titles and aliases
 
-- Wiki pages: Title Case, the subject itself as the name, no dates in the name. The filename is the link target — `[[Incident Management]]` must resolve. Avoid `[ ] # ^ | \ / :` in names.
+- Wiki pages: Title Case, the subject itself as the name, no dates in the name (exception: dated periodic analyses such as `Weekly Review YYYY-MM-DD`). The filename is the link target — `[[Incident Management]]` must resolve. Avoid `[ ] # ^ | \ / :` in names.
 - Titles are handles: declarative and specific ("Contractor Onboarding SOP", not "Onboarding stuff").
 - **Every SOP and process gets question-phrased `aliases`** ("How do we onboard a contractor?") so natural questions hit the right page in search and in chat.
 - Source pages: the human-readable title of the original document; the exact path lives in the `original` property.
@@ -188,7 +188,7 @@ Create the page in `wiki/ideas/` from Idea Template (`status: seedling`, `plante
 
 ### Comparison (`Compare [[article]] against [[SOP]]`)
 
-Ingest the external source if new → read the current SOP and its source → write a comparison in `wiki/analyses/`: point-by-point table, gaps, labeled recommendations. The SOP itself changes only when the owner approves — then the lesson is edited into the SOP page, handbook-first.
+Ingest the external source if new → read the current SOP and its source → write a comparison in `wiki/analyses/`: point-by-point table, gaps, labeled recommendations. **The SOP page itself does not change** — recommendations become SOP changes only when the owner approves and provides or authorizes an updated source document; then the lesson is edited into the SOP page, handbook-first.
 
 ### Weekly review ("Run the weekly review")
 
@@ -204,7 +204,7 @@ Lists **every** wiki page, organized by business area first, knowledge type as a
 
 ## log.md rules
 
-Append-only; new entries at the end; corrections are new `correction` entries. Format:
+Append-only; new entries at the end; corrections are new `correction` entries. **Record every ingestion, significant query, analysis, comparison, audit, structural change, conflict, and rule change.** Format:
 
 ```markdown
 ## [YYYY-MM-DD] operation | Subject
@@ -221,6 +221,6 @@ Operations: `setup`, `ingest`, `query`, `analysis`, `comparison`, `idea`, `revie
 | "Ingest the new clippings" | Ingestion over `clippings/` |
 | a question | Query |
 | "Plant an idea: …" | Greenhouse planting |
-| `Compare [[X]] against [[Y]]` | Comparison |
+| `Compare [[article]] against [[SOP name]]` | Comparison |
 | "Run the weekly review" | Weekly review |
 | "Run a wiki audit (dry run)" / "Apply the approved audit fixes" | Audit / fixes |

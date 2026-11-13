@@ -29,6 +29,7 @@ Marketing plans, campaigns, channels, and the marketing ideas moving through the
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("marketing")
 views:

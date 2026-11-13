@@ -29,6 +29,7 @@ General management, planning, governance, and KPIs. Arranged from direction-sett
 filters:
   and:
     - file.inFolder("wiki")
+    - '!file.inFolder("wiki/maps")'
     - file.hasProperty("area")
     - area.contains("management")
 views:
